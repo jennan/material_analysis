@@ -10,6 +10,7 @@ name = "pypi"
 ipython = "*"
 matplotlib = "*"
 jedi = "*"
+pdbpp = "*"
 
 
 [packages]
