@@ -14,26 +14,30 @@ def main(image_filename, coordinates_filename, *, detection_filename=None,
     :param str image_filename: image file containing micro-structures
     :param str coordinates_filename: output .csv file for coordinates
     :param str detection_filename: ouput image for detected micro-structures
-    :param float bandwidth: MeanShift bandwidth
-    :param int min_bin_freq: TODO
+    :param float bandwidth: bandwidth parameter of mean-shift algorithm
+    :param int min_bin_freq: min. number of points in bins to seed mean-shift
     """
     # load data
     img = imageio.imread(image_filename)
     img_flat = img.reshape(-1, 3)
 
     # segment pixels using 3 classes
+    print('Segmenting image...', end='', flush=True)
     kmeans = MiniBatchKMeans(3).fit(img_flat)
     labels_flat = kmeans.predict(img_flat)
     labels = labels_flat.reshape(img.shape[:2])
+    print(' DONE')
 
     # isolate pixels of micro-structures (darker)
     idx = np.argmax(kmeans.cluster_centers_.mean(-1))
     coordinates = np.stack(np.where(labels == idx), 1)
 
     # cluster micro-structures pixels
+    print('Clustering micro-structures pixels...', end='', flush=True)
     mshift = MeanShift(bandwidth, n_jobs=-1, bin_seeding=True,
                        min_bin_freq=min_bin_freq)
     mshift.fit(coordinates)
+    print(' DONE')
 
     # save coordinates as .csv file
     np.savetxt(coordinates_filename, mshift.cluster_centers_, header='X,Y')
