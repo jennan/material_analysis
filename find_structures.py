@@ -3,8 +3,14 @@
 import imageio
 import numpy as np
 from sklearn.cluster import MiniBatchKMeans, MeanShift
+from sklearn.externals.joblib.parallel import AutoBatchingMixin
 import matplotlib.pyplot as plt
 import defopt
+
+
+# inspired by https://github.com/scikit-learn/scikit-learn/issues/6943#issuecomment-229003483  # NOQA
+AutoBatchingMixin.MIN_IDEAL_BATCH_DURATION = 10
+AutoBatchingMixin.MAX_IDEAL_BATCH_DURATION = 30
 
 
 def main(image_filename, coordinates_filename, *, detection_filename=None,
