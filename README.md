@@ -13,5 +13,5 @@ This repository contains a `find_structures.py` script to find micros-structures
 
 Script usage is given by `-h` option:
 ```bash
-pipenv run ./find_structures.py -h
+pipenv run -- ./find_structures.py -h
 ```
