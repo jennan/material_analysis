@@ -50,7 +50,8 @@ def main(image_filename, coordinates_filename, *, detection_filename=None,
                    mshift.cluster_centers_[:, 0], c='r', s=1)
         ax.set_title('{} objets trouvés'.format(len(mshift.cluster_centers_)))
         ax.axis('off')
-        fig.savefig(detection_filename, bbox_inches='tight', dpi=300)
+        fig.subplots_adjust(left=0, right=1, top=1, bottom=0)
+        fig.savefig(detection_filename, dpi=300)
 
 
 if __name__ == "__main__":
