@@ -48,7 +48,7 @@ def main(image_filename, coordinates_filename, *, detection_filename=None,
         ax.imshow(img)
         ax.scatter(mshift.cluster_centers_[:, 1],
                    mshift.cluster_centers_[:, 0], c='r', s=1)
-        ax.set_title('{} objets trouvés'.format(len(mshift.cluster_centers_)))
+        ax.set_title('{} found objects'.format(len(mshift.cluster_centers_)))
         ax.axis('off')
         fig.subplots_adjust(left=0, right=1, top=1, bottom=0)
         fig.savefig(detection_filename, dpi=300)
